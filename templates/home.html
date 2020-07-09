@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+
+{% comment %} <script>
+
+    function removebutton() {
+    var elem = document.getElementById('fillIn');
+    elem.parentNode.removeChild(elem);
+    return false;
+
+}
+<script> {% endcomment %}
+
+
+
+
+
+ <div class="container">
+
+
+        
+    <form class="form-inline " method="GET" action="{% url 'my_home' %}">
+                <div class="form-group col-sm-4">
+                    <label for="inputSearch">ค้นหาภาพยนตร์:</label>
+                    <input type="text" class="form-control ml-3" id="inputSearch" 
+                        name="inputSearch" placeholder="Search" value="{{search_txt}}">
+                </div>
+            
+
+
+             <div class="form-group ml-4 col-sm-4">
+                <label for="semester">สถานะ :</label>
+               
+                    <select class="custom-select" id="semester" name="semester">
+                    <option value="">--เลือก--</option>
+                    {% for k in types%}
+                    <option value="{{k.id}}"{% if semester ==  k.id  %}selected{% endif %}>{{ k.name }}</option>
+                    {% endfor%}
+                    </select>
+           
+             
+            </div>
+              <button type="submit" class="btn-danger col-sm-2 ml-3">รอบฉาย</button>
+     </form>
+</div> 
+<br>
+<br>
+
+        <div class="container">
+                <div class="row container justify-content-center">
+                    
+                        
+                            {%for i in object_list %}
+                                <div class="box">
+                                <a class=""><img src=" {{i.img.url}} " id='img'></a>
+
+                                {% if i.movie_type.id == 2%}
+                                  <form method="POST" action="{% url 'des_movie' id=i.id %}">
+                                        {% csrf_token %}
+                                        <button class="fillIn" id='fillIn' id="{{i.id}}">{{ i.movie_type.name }}</button>
+                                        </form>
+
+                                {% else %}
+                                        <button class="fillIn2" >{{ i.movie_type.name }}</button>
+                                {%endif%}
+
+                                <br>
+                                <b>{{i.title }}</b>
+                                </div>
+                            {%endfor%}
+
+                    
+            </div>
+
+ </div>
+
+{% endblock %}

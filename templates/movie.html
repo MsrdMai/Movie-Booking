@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+
+        #des_img{
+
+            width:500px;
+            height:480px;
+            margin-left: 0px;
+            border-radius: 20px;
+
+        }
+
+
+        .box2 {
+
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 10px rgba(1, 0, 1, .1);
+            width: 1000px;
+            height:500px;
+            margin: center;
+            font-size:20px;
+
+        }
+
+        .box3 {
+
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 10px rgba(1, 0, 1, .1);
+            width: 1000px;
+            height:500px;
+            margin: center;
+            font-size:20px;
+            background:black;
+            color:white;
+
+        }
+
+        .income {
+            background:red;
+            box-shadow: 0 10px 10px rgba(1, 0, 1, .1);
+            
+            color:white;
+            
+        }
+
+        .box4 {
+            background:#663300;
+            box-shadow: 0 10px 10px rgba(1, 0, 1, .1);
+           
+            color:white;
+        }
+    
+
+        .fillIn3{color:white;
+                border-color: white;
+                pointer-events: none;}
+</style>
+
+
+            <div class="container">
+               
+
+                        <h1>{{movie.title}}</h1>
+                    
+                        <div class="box2">
+                                 <div class="row">
+                                        <div class="col">
+                                <br>
+                                             <a class=""><img src=" {{movie.img.url}} " id='des_img'></a> 
+                                             
+                                        </div>
+
+                                         <div class="col">
+                                                <br><br>
+                                            <p>{{movie.des}}</p>
+                                               
+                                            </div>
+                                        
+
+
+            </div>
+                                           
+            </div>
+            
+            </div>
+
+            <div class="container">
+
+                <label>สัญลักษณ์ที่นั่ง / Seat Details :</label>
+                <button type="button" class="btn btn-danger">จองแล้ว</button>
+                <button type="button" class="btn btn-success">ว่าง</button>
+
+
+            
+            <div class="box3">
+                                 <div class="row container justify-content-center">
+                                       
+                                        <button type="button" class="fillIn3 btn-block" >screen</button>
+                                         
+                                              {% for b in seat%}
+                                                    <form method="GET" action="{% url 'buy' id=b.id %}">
+                                                    {% csrf_token %}
+                                                    {% if b.seat_status.id == 1%}
+                                                    
+                                                    <button type="submit" class="btn btn-success" id="{{b.id}}">{{b.id}}{{b.name}}</button>
+                                                    
+                                                    {% else%}
+                                                        
+                                                    <button type="submit" class="btn btn-danger" id="{{b.id}}">{{b.id}}{{b.name}}</button>
+                                                    {%endif%}
+                                                                    </form>
+                                              {% endfor%}
+                                    </div>
+                                    
+
+         </div>   
+</div>
+        
+        <br>
+        <div class="container">
+
+        <div class="row">
+                    <div class="col sm-6">
+                                                    <div class="box4">
+                                                                     <h1>INCOME :</h1>                       
+                                                    </div>
+                            </div>
+
+                     <div class="col sm-6">
+                                                    <div class="income">
+                                                                     <h1>{{movie.income}}</h1>                       
+                                                    </div>
+                                </div>
+
+        </div>
+</div>
+
+
+
+
+ <div class="container">
+
+        <div class="row">
+                    <div class="col sm-6">
+                                                    <div class="box4">
+                                                                     <h1>Capital :</h1>                       
+                                                    </div>
+                            </div>
+
+                     <div class="col sm-6">
+                                                    <div class="income">
+                                                                     <h1>{{movie.capital}}</h1>                       
+                                                    </div>
+                                </div>
+
+        </div>
+</div>
+{% endblock %}
